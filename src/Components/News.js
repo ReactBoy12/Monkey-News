@@ -3,7 +3,7 @@ import NewsItems from './NewsItems'
 
 export class News extends Component {
 
-    article = [
+    articles = [
         {
             "source": {
                 "id": "espn-cric-info",
@@ -32,40 +32,43 @@ export class News extends Component {
         }
     ]
 
-    constructor(){
+    constructor() {
         super();
         console.log("this is news item constructor..");
 
-        this.state={
-            articles:this.article,
-            loading:false
+        this.state = {
+            articles: this.articles,
+            loading: false
         }
     }
 
-  render() {
-    return (
-      <>
-      <div className="container my-3">
-        <h2>News Monkey - HeadLines</h2>
-        <div className="row">
-            <div className="col-md-4">
-            <NewsItems title="Cricket" description="play with fun" imageUrl="https://a4.espncdn.com/combiner/i?img=%2Fi%2Fcricket%2Fcricinfo%2F1099495_800x450.jpg" newsUrl="TODO"/>
-            </div>
+    async componentDidMount() {
+        console.log("cdm");
+        let url = "https://newsapi.org/v2/everything?q=tesla&from=2022-08-21&sortBy=publishedAt&apiKey=6f8be59f629b44be97f3bf0921aa6507";
+        let data = await fetch(url);
+        let parseData = await data.json();
+        console.log(parseData)
+    }
 
-            <div className="col-md-4">
-            <NewsItems title="Cricket" description="play with fun"/>
-            </div>
-
-            <div className="col-md-4">
-            <NewsItems title="Cricket" description="play with fun"/>
-            </div>
-        </div>
-      
-      </div>
-    
-      </>
-    )
-  }
+    render() {
+        console.log("render")
+        return (
+            <>
+                <div className="container my-3">
+                    <h2>News Monkey - HeadLines</h2>
+                    <div className="row">
+                        {this.state.articles.map((element) => {
+                            return (
+                                <div className="col-md-4 my-4"  key={element.url}>
+                                    <NewsItems title={element.title.slice(0,45)} description={element.description.slice(0,88)} imageUrl={element.urlToImage} newsUrl={element.url} />
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+            </>
+        )
+    }
 }
 
 export default News
