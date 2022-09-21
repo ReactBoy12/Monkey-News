@@ -47,7 +47,7 @@ export class News extends Component {
         let url = "https://newsapi.org/v2/everything?q=tesla&from=2022-08-21&sortBy=publishedAt&apiKey=6f8be59f629b44be97f3bf0921aa6507";
         let data = await fetch(url);
         let parseData = await data.json();
-        console.log(parseData)
+        // console.log(parseData)
     }
 
     render() {
