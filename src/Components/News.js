@@ -23,6 +23,10 @@ export class News extends Component {
     };
   }
 
+   capitalizeLetter(string) {
+       return  string.charAt(0).toUpperCase()+ string.slice(1)
+  }
+
   async update() {
     console.log("cdm");
     let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=6f8be59f629b44be97f3bf0921aa6507&page=1pageSize=20`;
@@ -33,6 +37,7 @@ export class News extends Component {
       articles: parseData.articles,
       totalResults: parseData.totalResults,
     });
+    document.title =  ` ${this.capitalizeLetter(this.props.category)}- Monkey News`
   }
 
   async componentDidMount() {
@@ -88,8 +93,7 @@ export class News extends Component {
       <>
         <div className="container my-3 ">
           <h2>
-            News Monkey - HeadLines --{" "}
-            <h3 style={{ color: "red" }}>{this.props.headtitle}</h3>
+            News Monkey - Top HeadLines on {this.capitalizeLetter(this.props.category)}
           </h2>
           <div className="row">
             {this.state.articles.map((element) => {
